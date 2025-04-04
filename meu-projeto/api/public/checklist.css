@@ -1,0 +1,187 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #2200c7;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+#principal {
+    width: 100%;
+    max-width: 600px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    overflow-y: auto;
+}
+
+#cabecalho  {
+    width: 200px; 
+    height: auto; 
+    margin-top: 20px;
+}
+
+.bateria-text {
+    font-size: 18px;
+}
+
+.bateria-link {
+    font-size: 18px;
+    color: #2200c7;  
+    text-decoration: none;
+    font-weight: bold;
+    background-color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 2px solid #2200c7;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.bateria-link:hover {
+    background-color: #2200c7;
+    color: white;
+}
+
+input, button, textarea, select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #2200c7;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 18px;
+    padding: 15px;
+}
+
+button:hover {
+    background-color: #4CAF50;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+select {
+    appearance: none;
+    background-color: white;
+    padding-right: 30px;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.checklist-item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.checklist-item label {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.radio-options {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.radio-options div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.radio-options input[type="radio"] {
+    display: none;
+}
+
+.radio-options label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.radio-options label:hover {
+    background-color: #f0f0f0;
+}
+
+.radio-options input[type="radio"]:checked + label {
+    background-color: #2200c7;
+    color: white;
+    border-color: #2200c7;
+}
+
+.radio-options span {
+    font-size: 24px;
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    line-height: 24px;
+}
+
+
+@media (max-width: 600px) {
+    body {
+        padding: 5px;
+    }
+
+    #principal {
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    input, button, textarea, select {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .checklist-item label {
+        font-size: 16px;
+    }
+
+    .radio-options label {
+        font-size: 18px;
+        padding: 8px 12px;
+    }
+}

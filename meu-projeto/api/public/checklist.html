@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="checklist.css" rel="stylesheet" type="text/css">
+    <title>Checklist - Empilhadeira</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        function Enviar_checklist(event) {
+            event.preventDefault();
+            const local = document.getElementById('local').value;
+            const operador = document.getElementById('operador').value.trim();
+            const matricula = document.getElementById('matricula').value;
+            const diaandhora = document.getElementById("dia_hora").value;
+            const empilhadeira = document.querySelector('input[name="empilhadeira"]:checked')?.value;
+            const batida = document.querySelector('input[name="batida"]:checked')?.value;
+            const limpeza = document.querySelector('input[name="limpeza"]:checked')?.value;
+            const luzes = document.querySelector('input[name="luzes"]:checked')?.value;
+            const torre = document.querySelector('input[name="torre"]:checked')?.value;
+            const garfos = document.querySelector('input[name="garfos"]:checked')?.value;
+            const freios = document.querySelector('input[name="freios"]:checked')?.value;
+            const bateria = document.querySelector('input[name="bateria"]:checked')?.value;
+            const ruidos = document.querySelector('input[name="ruidos"]:checked')?.value;
+            const buzina = document.querySelector('input[name="buzina"]:checked')?.value;
+            const horimetro = document.getElementById('horimetro').value;
+            const observacoes = document.getElementById('observacoes').value.trim();
+
+            
+            if (!diaandhora) {
+                alert("Por favor, insira a data e hora.");
+                return;
+            }
+            if (!empilhadeira || !batida || !limpeza || !luzes || !torre || !garfos || !freios || !bateria || !ruidos || !buzina) {
+                alert("Por favor, preencha todos os campos do checklist.");
+                return;
+            }
+            if (!horimetro || horimetro <= 0) {
+                alert("Por favor, insira um valor válido para o horímetro inicial.");
+                return;
+            }
+
+            const dataFormatada = diaandhora.replace("T", " ") + ":00";
+            const info = {
+                local,
+                operador,
+                matricula,
+                dia_hora: dataFormatada,
+                empilhadeira,
+                batida,
+                limpeza,
+                luzes,
+                torre,
+                garfos,
+                freios,
+                bateria,
+                ruidos,
+                buzina,
+                horimetro,
+                observacoes
+            };
+
+            fetch('/addchecklist', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(info)
+            })
+                .then(response => response.text())
+                .then(resposta => alert(resposta))
+                .catch(error => {
+                    console.error('Erro ao enviar o checklist:', error);
+                    alert('Ocorreu um erro ao enviar o checklist. Verifique sua conexão e tente novamente.');
+                });
+        }
+    </script>
+</head>
+<body>
+    <div id="principal">
+        <img style="width: 120px; position: relative; top: -15px;" src="imagens/logo.png" alt="logogam">
+        <br>
+        <h1>Checklist da Empilhadeira</h1>
+        <form id="checklist-form" onsubmit="Enviar_checklist(event)">
+            <div id="informacoes">
+                <strong style="font-size: 25px;" for="local">Local:</strong>
+                <select id="local" name="CD">
+                    <option disabled selected value="ESCOLHA O CD">ESCOLHA O CD</option>
+                    <option value="SERRA-ES">SERRA-ES</option>
+                    <option value="TUBARÃO-SC">TUBARÃO-SC</option>
+                    <option value="SANTA CRUZ DO SUL-SCS">SANTA CRUZ DO SUL-SCS</option>
+                    <option value="SÃO JOSÉ DOS PINHAIS-PR">SÃO JOSÉ DOS PINHAIS-PR</option>
+                </select>
+                <strong style="font-size: 25px;">Operador:</strong>
+                <input type="text" id="operador" name="operador" placeholder="Nome do Operador...">
+                <h2>N° Matricula:</h2>
+                <input type="number" id="matricula" placeholder="Digite a Matricula...">
+                <h2>Dia:</h2>
+                <input style="font-size: 18px;" type="datetime-local" id="dia_hora">
+                <h2>Empilhadeira:</h2>
+                <div class="radio-options">
+                    <div>
+                        <input type="radio" id="empilhadeira01" name="empilhadeira" value="01">
+                        <label for="empilhadeira01">
+                            <span>1️⃣</span>
+                        </label>
+                    </div>
+                    <div>
+                        <input type="radio" id="empilhadeira02" name="empilhadeira" value="02">
+                        <label for="empilhadeira02">
+                            <span>2️⃣</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="checklist-item">
+                <label for="existencia-batidas">01. Existência de batidas</label>
+                <div class="radio-options">
+                    <div>
+                        <input type="radio" id="correto-existencia-batidas" name="batida" value="CONFORME">
+                        <label for="correto-existencia-batidas"><span>✅</span> Conforme</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="errado-existencia-batidas" name="batida" value="NÃO CONFORME">
+                        <label for="errado-existencia-batidas"><span>❌</span>Não Conforme</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <label for="limpeza">02. Limpeza da máquina</label>
+                <div class="radio-options">
+                    <div>
+                        <input type="radio" id="correto-limpeza" name="limpeza" value="CONFORME">
+                        <label for="correto-limpeza"><span>✅</span> Conforme</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="errado-limpeza" name="limpeza" value="NÃO CONFORME">
+                        <label for="errado-limpeza"><span>❌</span> Não Conforme</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <label for="luzes">03. Luzes painel (bateria, freios...)</label>
+                <div class="radio-options">
+                    <div>
+                        <input type="radio" id="correto-luzes" name="luzes" value="CONFORME">
+                        <label for="correto-luzes"><span>✅</span> Conforme</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="errado-luzes" name="luzes" value="NÃO CONFORME">
+                        <label for="errado-luzes"><span>❌</span> Não Conforme</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <label for="torre">04. Condições da torre, correntes e mangueiras</label>
+                <div class="radio-options">
+                    <div>
+                        <input type="radio" id="correto-torre" name="torre" value="CONFORME">
+                        <label for="correto-torre"><span>✅</span> Conforme</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="errado-torre" name="torre" value="NÃO CONFORME">
+                        <label for="errado-torre"><span>❌</span> Não Conforme</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <label for="garfos">05. Garfos em condições</label>
+                <div class="radio-options">
+                    <div>
+                        <input type="radio" id="correto-garfos" name="garfos" value="CONFORME">
+                        <label for="correto-garfos"><span>✅</span> Conforme</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="errado-garfos" name="garfos" value="NÃO CONFORME">
+                        <label for="errado-garfos"><span>❌</span> Não Conforme</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <label for="freios">06. Funcionamento freios</label>
+                <div class="radio-options">
+                    <div>
+                        <input type="radio" id="correto-freios" name="freios" value="CONFORME">
+                        <label for="correto-freios"><span>✅</span> Conforme</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="errado-freios" name="freios" value="NÃO CONFORME">
+                        <label for="errado-freios"><span>❌</span> Não conforme</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <label for="bateria">07. Condições da bateria, cabos e terminais</label>
+                <div class="radio-options">
+                    <div>
+                        <input type="radio" id="correto-bateria" name="bateria" value="CONFORME">
+                        <label for="correto-bateria"><span>✅</span> Conforme</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="errado-bateria" name="bateria" value="NÃO CONFORME">
+                        <label for="errado-bateria"><span>❌</span> Não Conforme</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <label for="ruidos">08. Ruídos normais</label>
+                <div class="radio-options">
+                    <div>
+                        <input type="radio" id="correto-ruidos" name="ruidos" value="CONFORME">
+                        <label for="correto-ruidos"><span>✅</span> Conforme</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="errado-ruidos" name="ruidos" value="NÃO CONFORME">
+                        <label for="errado-ruidos"><span>❌</span> Não Conforme</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <label for="buzina">09. Buzina</label>
+                <div class="radio-options">
+                    <div>
+                        <input type="radio" id="correto-buzina" name="buzina" value="CONFORME">
+                        <label for="correto-buzina"><span>✅</span> Conforme</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="errado-buzina" name="buzina" value="NÃO CONFORME">
+                        <label for="errado-buzina"><span>❌</span> Não Conforme</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checklist-item">
+                <label for="horimetro">10. Horímetro inicial</label>
+                <input type="number" id="horimetro" name="horimetro">
+            </div>
+
+            <div class="checklist-item">
+                <label for="observacoes">11. Observações</label>
+                <textarea id="observacoes" name="observacoes"></textarea>
+            </div>
+
+            <button type="submit" id="enviar-checklist">Enviar Checklist</button>
+        </form>
+        <div id="cabecalho">
+            <a href="bateria.html" class="bateria-link">Troca de Bateria</a>
+        </div>
+    </div>
+</body>
+</html>
